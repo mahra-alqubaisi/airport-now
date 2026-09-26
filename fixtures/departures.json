@@ -1,0 +1,519 @@
+{
+ "departures": [
+  {
+   "number": "EY 901",
+   "status": "Departed",
+   "airline": {
+    "name": "Etihad",
+    "iata": "EY"
+   },
+   "aircraft": {
+    "model": "Boeing 787-9"
+   },
+   "movement": {
+    "airport": {
+     "iata": "BOM",
+     "name": "Mumbai",
+     "municipalityName": "Mumbai"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 02:05Z",
+     "local": "2026-10-14 06:05+04:00"
+    },
+    "revisedTime": {
+     "utc": "2026-10-14 02:05Z",
+     "local": "2026-10-14 06:05+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "3L 111",
+   "status": "Departed",
+   "airline": {
+    "name": "Air Arabia Abu Dhabi",
+    "iata": "3L"
+   },
+   "aircraft": {
+    "model": "Airbus A320"
+   },
+   "movement": {
+    "airport": {
+     "iata": "CAI",
+     "name": "Cairo",
+     "municipalityName": "Cairo"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 02:20Z",
+     "local": "2026-10-14 06:20+04:00"
+    },
+    "revisedTime": {
+     "utc": "2026-10-14 02:45Z",
+     "local": "2026-10-14 06:45+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "EY 903",
+   "status": "Departed",
+   "airline": {
+    "name": "Etihad",
+    "iata": "EY"
+   },
+   "aircraft": {
+    "model": "Airbus A321"
+   },
+   "movement": {
+    "airport": {
+     "iata": "BAH",
+     "name": "Bahrain",
+     "municipalityName": "Bahrain"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 02:40Z",
+     "local": "2026-10-14 06:40+04:00"
+    },
+    "revisedTime": {
+     "utc": "2026-10-14 02:43Z",
+     "local": "2026-10-14 06:43+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "EY 905",
+   "status": "Departed",
+   "airline": {
+    "name": "Etihad",
+    "iata": "EY"
+   },
+   "aircraft": {
+    "model": "Boeing 777-300ER"
+   },
+   "movement": {
+    "airport": {
+     "iata": "JFK",
+     "name": "New York",
+     "municipalityName": "New York"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 02:55Z",
+     "local": "2026-10-14 06:55+04:00"
+    },
+    "revisedTime": {
+     "utc": "2026-10-14 03:35Z",
+     "local": "2026-10-14 07:35+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "6E 1402",
+   "status": "Departed",
+   "airline": {
+    "name": "IndiGo",
+    "iata": "6E"
+   },
+   "aircraft": {
+    "model": "Airbus A321"
+   },
+   "movement": {
+    "airport": {
+     "iata": "DEL",
+     "name": "Delhi",
+     "municipalityName": "Delhi"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 03:10Z",
+     "local": "2026-10-14 07:10+04:00"
+    },
+    "revisedTime": {
+     "utc": "2026-10-14 03:10Z",
+     "local": "2026-10-14 07:10+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "EY 907",
+   "status": "Departed",
+   "airline": {
+    "name": "Etihad",
+    "iata": "EY"
+   },
+   "aircraft": {
+    "model": "Airbus A320"
+   },
+   "movement": {
+    "airport": {
+     "iata": "MCT",
+     "name": "Muscat",
+     "municipalityName": "Muscat"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 03:25Z",
+     "local": "2026-10-14 07:25+04:00"
+    },
+    "revisedTime": {
+     "utc": "2026-10-14 03:43Z",
+     "local": "2026-10-14 07:43+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "SV 571",
+   "status": "Departed",
+   "airline": {
+    "name": "Saudia",
+    "iata": "SV"
+   },
+   "aircraft": {
+    "model": "Airbus A330-300"
+   },
+   "movement": {
+    "airport": {
+     "iata": "RUH",
+     "name": "Riyadh",
+     "municipalityName": "Riyadh"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 03:40Z",
+     "local": "2026-10-14 07:40+04:00"
+    },
+    "revisedTime": {
+     "utc": "2026-10-14 03:45Z",
+     "local": "2026-10-14 07:45+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "EY 909",
+   "status": "Boarding",
+   "airline": {
+    "name": "Etihad",
+    "iata": "EY"
+   },
+   "aircraft": {
+    "model": "Boeing 787-10"
+   },
+   "movement": {
+    "airport": {
+     "iata": "FRA",
+     "name": "Frankfurt",
+     "municipalityName": "Frankfurt"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 03:55Z",
+     "local": "2026-10-14 07:55+04:00"
+    },
+    "revisedTime": {
+     "utc": "2026-10-14 03:55Z",
+     "local": "2026-10-14 07:55+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "EY 911",
+   "status": "Expected",
+   "airline": {
+    "name": "Etihad",
+    "iata": "EY"
+   },
+   "aircraft": {
+    "model": "Airbus A320"
+   },
+   "movement": {
+    "airport": {
+     "iata": "KWI",
+     "name": "Kuwait",
+     "municipalityName": "Kuwait"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 05:10Z",
+     "local": "2026-10-14 09:10+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "EY 913",
+   "status": "Expected",
+   "airline": {
+    "name": "Etihad",
+    "iata": "EY"
+   },
+   "aircraft": {
+    "model": "Airbus A380-800"
+   },
+   "movement": {
+    "airport": {
+     "iata": "LHR",
+     "name": "London",
+     "municipalityName": "London"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 06:00Z",
+     "local": "2026-10-14 10:00+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "3L 113",
+   "status": "Expected",
+   "airline": {
+    "name": "Air Arabia Abu Dhabi",
+    "iata": "3L"
+   },
+   "aircraft": {
+    "model": "Airbus A320"
+   },
+   "movement": {
+    "airport": {
+     "iata": "AMM",
+     "name": "Amman",
+     "municipalityName": "Amman"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 06:15Z",
+     "local": "2026-10-14 10:15+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "EY 915",
+   "status": "Expected",
+   "airline": {
+    "name": "Etihad",
+    "iata": "EY"
+   },
+   "aircraft": {
+    "model": "Boeing 777-300ER"
+   },
+   "movement": {
+    "airport": {
+     "iata": "SYD",
+     "name": "Sydney",
+     "municipalityName": "Sydney"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 06:30Z",
+     "local": "2026-10-14 10:30+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "EY 917",
+   "status": "Expected",
+   "airline": {
+    "name": "Etihad",
+    "iata": "EY"
+   },
+   "aircraft": {
+    "model": "Boeing 787-10"
+   },
+   "movement": {
+    "airport": {
+     "iata": "CDG",
+     "name": "Paris",
+     "municipalityName": "Paris"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 06:50Z",
+     "local": "2026-10-14 10:50+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "EY 919",
+   "status": "Expected",
+   "airline": {
+    "name": "Etihad",
+    "iata": "EY"
+   },
+   "aircraft": {
+    "model": "Airbus A320"
+   },
+   "movement": {
+    "airport": {
+     "iata": "DOH",
+     "name": "Doha",
+     "municipalityName": "Doha"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 07:00Z",
+     "local": "2026-10-14 11:00+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "6E 1404",
+   "status": "Expected",
+   "airline": {
+    "name": "IndiGo",
+    "iata": "6E"
+   },
+   "aircraft": {
+    "model": "Airbus A321"
+   },
+   "movement": {
+    "airport": {
+     "iata": "HYD",
+     "name": "Hyderabad",
+     "municipalityName": "Hyderabad"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 07:20Z",
+     "local": "2026-10-14 11:20+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "EY 999",
+   "status": "Expected",
+   "airline": {
+    "name": "Etihad",
+    "iata": "EY"
+   },
+   "aircraft": {
+    "model": "Boeing 787-9"
+   },
+   "movement": {
+    "airport": {
+     "iata": "LHR",
+     "name": "London",
+     "municipalityName": "London"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 07:40Z",
+     "local": "2026-10-14 11:40+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "EY 921",
+   "status": "Expected",
+   "airline": {
+    "name": "Etihad",
+    "iata": "EY"
+   },
+   "aircraft": {
+    "model": "Airbus A321"
+   },
+   "movement": {
+    "airport": {
+     "iata": "BEY",
+     "name": "Beirut",
+     "municipalityName": "Beirut"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 07:55Z",
+     "local": "2026-10-14 11:55+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "SV 573",
+   "status": "Expected",
+   "airline": {
+    "name": "Saudia",
+    "iata": "SV"
+   },
+   "aircraft": {
+    "model": "Airbus A330-300"
+   },
+   "movement": {
+    "airport": {
+     "iata": "JED",
+     "name": "Jeddah",
+     "municipalityName": "Jeddah"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 08:00Z",
+     "local": "2026-10-14 12:00+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "EY 923",
+   "status": "Expected",
+   "airline": {
+    "name": "Etihad",
+    "iata": "EY"
+   },
+   "aircraft": {
+    "model": "Airbus A350-1000"
+   },
+   "movement": {
+    "airport": {
+     "iata": "ICN",
+     "name": "Seoul",
+     "municipalityName": "Seoul"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 08:15Z",
+     "local": "2026-10-14 12:15+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "EY 925",
+   "status": "Expected",
+   "airline": {
+    "name": "Etihad",
+    "iata": "EY"
+   },
+   "aircraft": {
+    "model": "Airbus A320"
+   },
+   "movement": {
+    "airport": {
+     "iata": "CMB",
+     "name": "Colombo",
+     "municipalityName": "Colombo"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 08:30Z",
+     "local": "2026-10-14 12:30+04:00"
+    },
+    "terminal": "A"
+   }
+  },
+  {
+   "number": "EY 927",
+   "status": "Expected",
+   "airline": {
+    "name": "Etihad",
+    "iata": "EY"
+   },
+   "aircraft": {
+    "model": "Airbus A380-800"
+   },
+   "movement": {
+    "airport": {
+     "iata": "CDG",
+     "name": "Paris",
+     "municipalityName": "Paris"
+    },
+    "scheduledTime": {
+     "utc": "2026-10-14 08:35Z",
+     "local": "2026-10-14 12:35+04:00"
+    },
+    "terminal": "A"
+   }
+  }
+ ]
+}

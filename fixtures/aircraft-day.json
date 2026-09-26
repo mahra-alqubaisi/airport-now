@@ -1,0 +1,109 @@
+[
+ {
+  "number": "EY 997",
+  "status": "Arrived",
+  "airline": {
+   "iata": "EY",
+   "name": "Etihad"
+  },
+  "aircraft": {
+   "reg": "A6-TST",
+   "model": "Boeing 787-9"
+  },
+  "departure": {
+   "airport": {
+    "iata": "AUH",
+    "municipalityName": "Abu Dhabi"
+   },
+   "scheduledTime": {
+    "utc": "2026-10-13 20:10Z",
+    "local": "2026-10-14 00:10+04:00"
+   }
+  },
+  "arrival": {
+   "airport": {
+    "iata": "LHR",
+    "municipalityName": "London"
+   },
+   "scheduledTime": {
+    "utc": "2026-10-14 00:30Z",
+    "local": "2026-10-14 04:30+04:00"
+   }
+  }
+ },
+ {
+  "number": "EY 998",
+  "status": "EnRoute",
+  "airline": {
+   "iata": "EY",
+   "name": "Etihad"
+  },
+  "aircraft": {
+   "reg": "A6-TST",
+   "model": "Boeing 787-9"
+  },
+  "departure": {
+   "airport": {
+    "iata": "LHR",
+    "municipalityName": "London"
+   },
+   "scheduledTime": {
+    "utc": "2026-10-13 22:40Z",
+    "local": "2026-10-14 02:40+04:00"
+   }
+  },
+  "arrival": {
+   "airport": {
+    "iata": "AUH",
+    "municipalityName": "Abu Dhabi"
+   },
+   "scheduledTime": {
+    "utc": "2026-10-14 06:10Z",
+    "local": "2026-10-14 10:10+04:00"
+   },
+   "predictedTime": {
+    "utc": "2026-10-14 06:45Z",
+    "local": "2026-10-14 10:45+04:00"
+   }
+  }
+ },
+ {
+  "number": "EY 999",
+  "status": "Expected",
+  "airline": {
+   "name": "Etihad",
+   "iata": "EY"
+  },
+  "aircraft": {
+   "reg": "A6-TST",
+   "model": "Boeing 787-9"
+  },
+  "departure": {
+   "airport": {
+    "iata": "AUH",
+    "name": "Abu Dhabi",
+    "municipalityName": "Abu Dhabi"
+   },
+   "scheduledTime": {
+    "utc": "2026-10-14 07:40Z",
+    "local": "2026-10-14 11:40+04:00"
+   },
+   "revisedTime": {
+    "utc": "2026-10-14 07:40Z",
+    "local": "2026-10-14 11:40+04:00"
+   },
+   "terminal": "A"
+  },
+  "arrival": {
+   "airport": {
+    "iata": "LHR",
+    "name": "London Heathrow",
+    "municipalityName": "London"
+   },
+   "scheduledTime": {
+    "utc": "2026-10-14 11:40Z",
+    "local": "2026-10-14 15:40+04:00"
+   }
+  }
+ }
+]

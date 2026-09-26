@@ -1,0 +1,41 @@
+[
+ {
+  "number": "EY 999",
+  "status": "Expected",
+  "airline": {
+   "name": "Etihad",
+   "iata": "EY"
+  },
+  "aircraft": {
+   "reg": "A6-TST",
+   "model": "Boeing 787-9"
+  },
+  "departure": {
+   "airport": {
+    "iata": "AUH",
+    "name": "Abu Dhabi",
+    "municipalityName": "Abu Dhabi"
+   },
+   "scheduledTime": {
+    "utc": "2026-10-14 07:40Z",
+    "local": "2026-10-14 11:40+04:00"
+   },
+   "revisedTime": {
+    "utc": "2026-10-14 07:40Z",
+    "local": "2026-10-14 11:40+04:00"
+   },
+   "terminal": "A"
+  },
+  "arrival": {
+   "airport": {
+    "iata": "LHR",
+    "name": "London Heathrow",
+    "municipalityName": "London"
+   },
+   "scheduledTime": {
+    "utc": "2026-10-14 11:40Z",
+    "local": "2026-10-14 15:40+04:00"
+   }
+  }
+ }
+]
