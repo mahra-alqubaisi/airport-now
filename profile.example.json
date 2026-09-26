@@ -1,0 +1,7 @@
+{
+  "cabin": "economy",
+  "bags": "checked",
+  "checkedInOnline": true,
+  "eGate": true,
+  "gateBufferMinutes": 15
+}

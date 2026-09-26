@@ -1,11 +1,13 @@
 // One check: fetch the data it needs (as cheaply as possible), build every signal, save a snapshot.
-import { DEFAULT_ORIGIN, HOME_AIRPORT, HOME_AIRPORT_COORDS, HOME_UTC_OFFSET_HOURS, INBOUND_LOOKAHEAD_HOURS, TRAFFIC_LOOKAHEAD_HOURS } from "./config.js";
+import { DEMO_PROFILE, type Profile, DEFAULT_ORIGIN, HOME_AIRPORT, HOME_AIRPORT_COORDS, HOME_UTC_OFFSET_HOURS, INBOUND_LOOKAHEAD_HOURS, TRAFFIC_LOOKAHEAD_HOURS } from "./config.js";
 import type { Source } from "./aerodatabox.js";
 import { airportDelays, delayMinutes, delayRisk, findInbound, knockOn } from "./analyze.js";
 import { parseDepartures, parseFlights } from "./parse.js";
 import { airportSignal } from "./signals/airport.js";
 import { delaySignal } from "./signals/delay.js";
 import { flightSignal } from "./signals/flight.js";
+import { gateSignal } from "./signals/gate.js";
+import { journeySignal } from "./signals/journey.js";
 import { inboundSignal } from "./signals/inbound.js";
 import { pressureSignal } from "./signals/pressure.js";
 import { trafficSignal } from "./signals/traffic.js";
@@ -27,6 +29,7 @@ export interface Options {
   weather?: WeatherSource;
   traffic?: TrafficSource;
   origin?: { lat: number; lon: number; label: string };
+  profile?: Profile;
 }
 
 /** Great-circle distance in km. */
@@ -89,8 +92,9 @@ export async function airportNow(src: Source, flightNumber: string, date: string
       : await safely(w.locate(city, flight.arrival.countryCode));
     landing = flight.arrival.scheduled ?? null;
     if (landing == null && destCoords) {
-      // Not in the data: estimate from distance (~830 km/h plus 30 min for taxi, climb and approach).
-      landing = dep + Math.round((distanceKm(HOME_AIRPORT_COORDS, destCoords) / 830) * 60 + 30) * 60_000;
+      // Not in the data: estimate from distance. Planes don't fly the straight line (+6%), ~830 km/h,
+      // plus 35 min for taxi, climb and approach. Checked against EY 61's real schedule (7h40 to London).
+      landing = dep + Math.round(((distanceKm(HOME_AIRPORT_COORDS, destCoords) * 1.06) / 830) * 60 + 35) * 60_000;
       estimated = true;
     }
     [homeWx, destWx] = await Promise.all([
@@ -118,12 +122,27 @@ export async function airportNow(src: Source, flightNumber: string, date: string
   }
   if (destWxSig.level === "watch") risk.reasons.push(`Weather at ${city}: ${destWxSig.reasons[0]}`);
 
+  // 9. Gate walk and your personal timing.
+  const pressureSig = pressureSignal(around, dep, flight.airlineIata ?? "EY");
+  const pd = pressureSig.data as { level: "quiet" | "normal" | "busy"; rush: boolean };
+  const gateSig = gateSignal(flight.departure.gate, flight.departure.terminal);
+  const journeySig = journeySignal({
+    now, departure: dep,
+    destinationIata: flight.arrival.airportIata, destinationCountry: flight.arrival.countryCode,
+    busy: pd.rush ? "busy" : pd.level,
+    walkMinutes: (gateSig.data as { walkMinutes: number }).walkMinutes,
+    trafficMinutes: trafficSig && trafficSig.level !== "unknown" ? (trafficSig.data as { minutes: number }).minutes : null,
+    profile: opts.profile ?? DEMO_PROFILE,
+  });
+
   const signals: Signal[] = [
     flightSignal(flight, yourDelay),
-    pressureSignal(around, dep, flight.airlineIata ?? "EY"),
+    journeySig,
+    pressureSig,
     delaySignal(risk, missing),
     inboundSig,
     airportSig,
+    gateSig,
     ...(opts.weather ? [homeWxSig, destWxSig] : []),
     ...(trafficSig ? [trafficSig] : []),
   ];

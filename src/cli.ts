@@ -4,6 +4,8 @@
 //   --save  save a snapshot in ./data (history for "what changed" and the replay page)
 import { liveSource, mockSource } from "./aerodatabox.js";
 import { Budget } from "./budget.js";
+import { existsSync, readFileSync } from "node:fs";
+import { DEMO_PROFILE } from "./config.js";
 import { airportNow } from "./run.js";
 import { Store } from "./store.js";
 import { liveTraffic, mockTraffic } from "./traffic.js";
@@ -24,7 +26,10 @@ try {
     const tomtom = process.env.TOMTOM_KEY;
     const lat = Number(process.env.ORIGIN_LAT), lon = Number(process.env.ORIGIN_LON);
     const origin = lat && lon ? { lat, lon, label: process.env.ORIGIN_LABEL ?? "home" } : undefined;
+    // Your own settings live in profile.json (never uploaded); otherwise the demo profile is used.
+    const profile = existsSync("profile.json") ? { ...DEMO_PROFILE, ...JSON.parse(readFileSync("profile.json", "utf8")) } : DEMO_PROFILE;
     const r = await airportNow(liveSource(flag("--raw"), budget), num, date, Date.now(), {
+      profile,
       store: flag("--save") ? new Store() : undefined,
       weather: liveWeather(),
       traffic: tomtom ? liveTraffic(tomtom) : undefined,

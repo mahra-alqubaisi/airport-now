@@ -1,3 +1,6 @@
+import { DEMO_PROFILE } from "./config.js";
+import { walkMinutes } from "./signals/gate.js";
+import { journeySignal } from "./signals/journey.js";
 import { mockWeather, parseForecast, type WeatherSource } from "./weather.js";
 import { mockTraffic } from "./traffic.js";
 import { mkdtempSync } from "node:fs";
@@ -94,7 +97,7 @@ const c1 = counting();
 const r = await airportNow(c1.src, "EY 999", "2026-10-14", T("08:00"));
 ok(sig(r, "pressure").data.airlineFlights === 9 && sig(r, "pressure").data.a380s === 2, "9 Etihad flights around yours, 2 A380s (the 09:10 one excluded)");
 ok(sig(r, "inbound").data.pushesYourFlightBy === 20 && sig(r, "delay").data.risk === "medium", "sample trip: medium risk from the late incoming plane");
-ok(r.signals.map((x) => x.id).join() === "flight,pressure,delay,inbound,airport", "five signals, same shape, fixed order");
+ok(r.signals.map((x) => x.id).join() === "flight,journey,pressure,delay,inbound,airport,gate", "core signals, same shape, fixed order");
 
 console.log("Saving the free allowance");
 ok(c1.calls.join() === "board,aircraft", "flight found on the board: no separate flight lookup (2 requests, not 3)");
@@ -148,6 +151,33 @@ const t1 = await airportNow(mockSource(), "EY 999", "2026-10-14", T("08:00"), { 
 ok(sig(t1, "traffic").level === "watch" && sig(t1, "traffic").reasons[0].startsWith("19 min slower"), "traffic 19 min worse than usual → worth knowing");
 const t2 = await airportNow(mockSource(), "EY 999", "2026-10-14", T("08:00") - 26 * 60 * MIN, { traffic: mockTraffic() });
 ok(sig(t2, "traffic").level === "unknown", "flight a day away → traffic not checked yet (it would be meaningless)");
+
+console.log("Gate walking table");
+ok(walkMinutes("C27").minutes === 12 && walkMinutes("C 27").minutes === 12, "C27 → ~12 min (spaces tolerated)");
+ok(walkMinutes("D41").minutes === 19, "D41, far end of a pier → ~19 min");
+ok(walkMinutes("A3").minutes === 6, "A3, near the core → ~6 min");
+ok(walkMinutes("E4").bus === true, "E4 → bus gate");
+ok(!walkMinutes(null).known && walkMinutes(null).minutes === 13, "no gate yet → assume the average");
+
+console.log("Your timing");
+const dep0 = T("11:40");
+const J = (over: Partial<typeof DEMO_PROFILE>, extra: Partial<Parameters<typeof journeySignal>[0]> = {}) =>
+  journeySignal({ now: T("06:00"), departure: dep0, busy: "normal", walkMinutes: 13, trafficMinutes: null,
+    destinationIata: "LHR", profile: { ...DEMO_PROFILE, ...over }, ...extra }).data as any;
+const hm = (ms: number) => new Date(ms + 4 * 3600e3).toISOString().slice(11, 16);
+ok(hm(J({}).arriveBy) === "10:25", "demo profile, normal day → be there by 10:25 (bag drop must beat the 10:40 close)");
+ok(J({ bags: "hand" }).arriveBy > J({}).arriveBy, "hand luggage + online → can arrive later, no desk");
+ok(J({}, { busy: "busy" }).arriveBy < J({}).arriveBy, "busy airport → earlier");
+ok(hm(J({ cabin: "business" }).deskCloses) === "10:55", "Business: desk closes 45 min before, not 60");
+ok(hm(J({}, { destinationIata: "JFK" }).preclearanceBy) === "09:40", "US flight: preclearance by 2h before");
+ok(J({}, { destinationIata: "JFK" }).arriveBy < J({}).arriveBy, "US flight → much earlier");
+ok(J({}, { trafficMinutes: 30 }).leaveBy === J({}).arriveBy - 30 * MIN, "with traffic: leave-by = arrive-by minus the drive");
+const notIn = journeySignal({ now: T("06:00"), departure: dep0, busy: "normal", walkMinutes: 13, trafficMinutes: null, profile: { ...DEMO_PROFILE, checkedInOnline: false } });
+ok(notIn.level === "watch" && notIn.reasons[0].startsWith("Online check-in is open"), "not checked in online yet → tells you to do it now");
+const late = journeySignal({ now: T("10:50"), departure: dep0, busy: "normal", walkMinutes: 13, trafficMinutes: null, profile: DEMO_PROFILE });
+ok(late.level === "alert" && late.reasons.some((r) => r === "Check-in has closed."), "10:50 with a bag → check-in closed, alert");
+const nearly = journeySignal({ now: T("10:30"), departure: dep0, busy: "normal", walkMinutes: 13, trafficMinutes: null, profile: DEMO_PROFILE });
+ok(nearly.level === "watch" && nearly.reasons.some((r) => r.includes("Go now")), "10:30 → past the ideal time but still possible, go now");
 
 console.log(failed ? `\n${failed} FAILED` : "\nALL PASSED");
 process.exit(failed ? 1 : 0);

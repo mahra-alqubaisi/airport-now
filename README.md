@@ -17,6 +17,8 @@ Each signal is its own module and reports in the same shape (level, headline, re
 | `delay` | low / medium / high, with reasons, and "so far" while pieces are still unknown. Fog or storms at AUH raise it a level |
 | `weatherHome` | Abu Dhabi at departure time: only what affects operations (fog, dust, low visibility, storms, gusts) |
 | `weatherDest` | destination at landing time: storms or gusts that could slow the arrival, plus what to pack |
+| `journey` | your personal timing: be at the airport by X, built backwards from Etihad's published cutoffs, today's queues and your gate walk, and what to do now |
+| `gate` | walking time from security, from our own Terminal A table (piers A–D, bus gates E/F) |
 | `traffic` | drive to AUH vs the usual time for that hour, only in the last 5 hours |
 
 Every check can be saved as a snapshot (`data/history`), which is what "what changed since
@@ -33,7 +35,7 @@ last time" and the public replay page are built on.
 
     npm install
     npm run demo        # sample data, no account needed
-    npm run check       # 45 scenario checks
+    npm run check       # 60 scenario checks
 
 With a free AeroDataBox key from RapidAPI:
 
@@ -44,8 +46,10 @@ Weather comes from Open-Meteo (free, no key). Traffic needs a free TomTom key in
 The public version starts from Abu Dhabi city centre; a private starting point goes in
 `ORIGIN_LAT`, `ORIGIN_LON` and `ORIGIN_LABEL`, never in the code.
 
+Personal settings (cabin, checked bag or hand luggage, online check-in, e-gates, how early you
+like to be at the gate) go in `profile.json`. Copy `profile.example.json` to start. It's never uploaded.
+
 ## Coming next
 
-A personal profile (bags, online check-in), gate walking times,
-the agent loop (check on a schedule, compare with last time, notify only when something material
+The agent loop (check on a schedule, compare with last time, notify only when something material
 changes), a public dashboard, and a seat-map reader.
