@@ -16,7 +16,7 @@ export const passengers = (model?: string) => Math.round(seatsFor(model) * LOAD_
 
 export function delayMinutes(f: Flight): number | null {
   const d = f.departure;
-  if (d.scheduled == null || d.best == null) return null;
+  if (!d.live || d.scheduled == null || d.best == null) return null; // no live time = unknown, never "on time"
   return mins(d.best - d.scheduled);
 }
 
@@ -38,6 +38,7 @@ export function airportDelays(board: Flight[], now: number) {
   const known = recent.map(delayMinutes).filter((d): d is number => d != null);
   const late = known.filter((d) => d >= DELAYED_IF_MINUTES);
   return {
+    recent: recent.length,
     checked: known.length,
     late: late.length,
     share: known.length ? late.length / known.length : 0,
@@ -57,13 +58,18 @@ export function findInbound(aircraftDay: Flight[], homeIata: string, yourDepartu
  * Only if it leaves less than the minimum turnaround time on the ground.
  */
 export function knockOn(inbound: Flight | undefined, yourScheduled: number, model?: string) {
-  if (!inbound || inbound.arrival.best == null || inbound.arrival.scheduled == null) return null;
+  if (!inbound) return null;
+  const from = inbound.departure.airportName ?? inbound.departure.airportIata ?? "?";
+  if (!inbound.arrival.live || inbound.arrival.best == null || inbound.arrival.scheduled == null) {
+    return { known: false as const, inboundNumber: inbound.number, from };
+  }
   const lateBy = mins(inbound.arrival.best - inbound.arrival.scheduled);
   const turn = WIDEBODY.test(model ?? "") ? TURNAROUND_MIN.widebody : TURNAROUND_MIN.narrowbody;
   const earliestOut = inbound.arrival.best + turn * MIN;
   return {
+    known: true as const,
     inboundNumber: inbound.number,
-    from: inbound.departure.airportName ?? inbound.departure.airportIata ?? "?",
+    from,
     lateBy,
     groundMinutes: mins(yourScheduled - inbound.arrival.best),
     turnaround: turn,
@@ -78,6 +84,7 @@ export function delayRisk(
   yourDelay: number | null,
   k: ReturnType<typeof knockOn>,
   airport: ReturnType<typeof airportDelays>,
+  aircraftAssigned = true,
 ) {
   const reasons: string[] = [];
   let risk: Risk = "low";
@@ -85,7 +92,11 @@ export function delayRisk(
   if (yourDelay != null && yourDelay >= DELAYED_IF_MINUTES) {
     return { risk: "high" as Risk, reasons: [`Already showing ${yourDelay} min late.`] };
   }
-  if (k) {
+  if (!aircraftAssigned) {
+    reasons.push("Your exact plane isn't assigned yet, so I can't check where it's coming from. Airlines usually assign it a few hours before.");
+  } else if (k && !k.known) {
+    reasons.push(`Your plane comes in as ${k.inboundNumber} from ${k.from}. No live timing for it yet.`);
+  } else if (k) {
     if (k.pushesYourFlightBy >= 30) risk = "high";
     else if (k.pushesYourFlightBy >= 10) risk = "medium";
     if (k.lateBy >= 10) {
@@ -100,7 +111,9 @@ export function delayRisk(
     risk = up(risk);
     reasons.push(`Bad day at the airport: ${airport.late} of the last ${airport.checked} departures left late (avg ${airport.avgLateMinutes} min).`);
   } else if (airport.checked >= 5) {
-    reasons.push(`Airport running normally: ${airport.late} of the last ${airport.checked} departures late.`);
+    reasons.push(`Airport running normally: ${airport.late} of the last ${airport.checked} departures with live times were late.`);
+  } else if (airport.recent > 0) {
+    reasons.push(`Can't judge the airport yet: only ${airport.checked} of the last ${airport.recent} departures have live times.`);
   }
   if (!reasons.length) reasons.push("Nothing unusual so far.");
   return { risk, reasons };

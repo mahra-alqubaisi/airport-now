@@ -11,12 +11,16 @@ function time(t: any): number | undefined {
 
 function movement(m: any): Movement {
   const scheduled = time(m?.scheduledTime);
-  const best = time(m?.runwayTime) ?? time(m?.actualTime) ?? time(m?.revisedTime) ?? time(m?.predictedTime) ?? scheduled;
+  const real = time(m?.runwayTime) ?? time(m?.actualTime) ?? time(m?.revisedTime) ?? time(m?.predictedTime);
   return {
     airportIata: m?.airport?.iata,
     airportName: m?.airport?.municipalityName ?? m?.airport?.name,
+    countryCode: m?.airport?.countryCode,
+    lat: m?.airport?.location?.lat,
+    lon: m?.airport?.location?.lon,
     scheduled,
-    best,
+    best: real ?? scheduled,
+    live: real != null,
     terminal: m?.terminal ?? undefined,
     gate: m?.gate ?? undefined,
   };
@@ -48,7 +52,10 @@ export function parseDepartures(json: any, homeIata: string): Flight[] {
     return {
       ...base(f),
       departure: { ...here, airportIata: homeIata, airportName: undefined },
-      arrival: { airportIata: m?.airport?.iata, airportName: m?.airport?.municipalityName ?? m?.airport?.name },
+      arrival: {
+        airportIata: m?.airport?.iata, airportName: m?.airport?.municipalityName ?? m?.airport?.name,
+        countryCode: m?.airport?.countryCode, lat: m?.airport?.location?.lat, lon: m?.airport?.location?.lon,
+      },
     };
   });
 }

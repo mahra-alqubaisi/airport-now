@@ -385,7 +385,8 @@
     "iata": "EY"
    },
    "aircraft": {
-    "model": "Boeing 787-9"
+    "model": "Boeing 787-9",
+    "reg": "A6-TST"
    },
    "movement": {
     "airport": {

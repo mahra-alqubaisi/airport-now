@@ -29,3 +29,24 @@ export const TURNAROUND_MIN = { widebody: 75, narrowbody: 45 };
 export const WIDEBODY = /A380|777|787|A350|A330|767|747/i;
 
 export const DELAYED_IF_MINUTES = 15;
+
+/** 8+ big Etihad jets around your flight = a departure wave. */
+export const RUSH_WIDEBODIES = 8;
+
+/** Only look up your plane's previous flight in the last few hours (saves the free allowance). */
+export const INBOUND_LOOKAHEAD_HOURS = 4;
+
+/** AeroDataBox free plan: 600 units a month, flight endpoints cost 2 units each. */
+export const BUDGET = { monthlyUnits: 600, unitsPerRequest: 2, reserve: 20 };
+
+/** Abu Dhabi Zayed International (from the flight data). */
+export const HOME_AIRPORT_COORDS = { lat: 24.433, lon: 54.6511 };
+
+/** Public demo starting point. Your real home goes in the ORIGIN_LAT / ORIGIN_LON environment variables, never in code. */
+export const DEFAULT_ORIGIN = { lat: 24.4667, lon: 54.3667, label: "Abu Dhabi city centre" };
+
+/** Traffic only matters close to leaving. */
+export const TRAFFIC_LOOKAHEAD_HOURS = 5;
+
+/** Weather that affects operations. */
+export const WEATHER = { lowVisibilityM: 3000, veryLowVisibilityM: 1000, strongGustKmh: 60 };
